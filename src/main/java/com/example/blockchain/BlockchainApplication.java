@@ -34,6 +34,7 @@ public class BlockchainApplication {
     public static Boolean isChainValid() {
         Block currentBlock;
         Block previousBlock;
+        String hashTarget = new String(new char[difficulty]).replace('\0', '0');
 
         for (int i=1; i < blockchain.size(); i++) {
             currentBlock = blockchain.get(i);
@@ -46,6 +47,11 @@ public class BlockchainApplication {
 
             if (!previousBlock.hash.equals(currentBlock.previousHash)) {
                 System.out.println("현재 해쉬 이전 해쉬 불일치");
+                return false;
+            }
+
+            if (!currentBlock.hash.substring(0, difficulty).equals(hashTarget)) {
+                System.out.println("This block hasn`t been mind");
                 return false;
             }
         }
